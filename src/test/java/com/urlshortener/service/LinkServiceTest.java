@@ -96,6 +96,52 @@ class LinkServiceTest {
   }
 
   @Test
+  void createStoresFutureExpirationWhenProvided() {
+    when(codeGenerator.newCode()).thenReturn("Ab3xY9z");
+    when(linkRepository.saveAndFlush(any(Link.class))).thenAnswer(inv -> inv.getArgument(0));
+
+    Link link = service.create("https://example.com", NOW.plusSeconds(3600));
+
+    assertThat(link.getExpiresAt()).isEqualTo(NOW.plusSeconds(3600));
+  }
+
+  @Test
+  void createRejectsExpirationInThePastBeforeTouchingTheDatabase() {
+    assertThatThrownBy(() -> service.create("https://example.com", NOW.minusSeconds(1)))
+        .isInstanceOf(InvalidExpirationException.class);
+    verifyNoInteractions(linkRepository, codeGenerator);
+  }
+
+  @Test
+  void createRejectsExpirationExactlyAtCreationTime() {
+    assertThatThrownBy(() -> service.create("https://example.com", NOW))
+        .isInstanceOf(InvalidExpirationException.class);
+    verifyNoInteractions(linkRepository, codeGenerator);
+  }
+
+  @Test
+  void resolveForRedirect_refusesExpiredLinkAndRecordsNoClick() {
+    Link expired =
+        new Link("Ab3xY9z", "https://example.com", NOW.minusSeconds(7200), NOW.minusSeconds(1));
+    when(linkRepository.findByCode("Ab3xY9z")).thenReturn(Optional.of(expired));
+
+    assertThatThrownBy(() -> service.resolveForRedirect("Ab3xY9z", null))
+        .isInstanceOf(LinkExpiredException.class);
+    verifyNoInteractions(eventPublisher);
+  }
+
+  @Test
+  void resolveForRedirect_allowsLinkWhoseExpiryIsStillInTheFuture() {
+    Link notYetExpired =
+        new Link("Ab3xY9z", "https://example.com", NOW.minusSeconds(60), NOW.plusSeconds(60));
+    when(linkRepository.findByCode("Ab3xY9z")).thenReturn(Optional.of(notYetExpired));
+
+    Link resolved = service.resolveForRedirect("Ab3xY9z", null);
+
+    assertThat(resolved).isSameAs(notYetExpired);
+  }
+
+  @Test
   void resolveForRedirect_publishesClickEventWithLinkIdAndReferrer() {
     Link link = new Link("Ab3xY9z", "https://example.com", NOW);
     when(linkRepository.findByCode("Ab3xY9z")).thenReturn(Optional.of(link));

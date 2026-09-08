@@ -25,14 +25,22 @@ public class Link {
   @Column(name = "created_at", nullable = false)
   private Instant createdAt;
 
+  @Column(name = "expires_at")
+  private Instant expiresAt;
+
   protected Link() {
     // required by JPA
   }
 
   public Link(String code, String longUrl, Instant createdAt) {
+    this(code, longUrl, createdAt, null);
+  }
+
+  public Link(String code, String longUrl, Instant createdAt, Instant expiresAt) {
     this.code = code;
     this.longUrl = longUrl;
     this.createdAt = createdAt;
+    this.expiresAt = expiresAt;
   }
 
   public Long getId() {
@@ -49,5 +57,14 @@ public class Link {
 
   public Instant getCreatedAt() {
     return createdAt;
+  }
+
+  public Instant getExpiresAt() {
+    return expiresAt;
+  }
+
+  /** A link expires the moment "now" reaches expiresAt; NULL never expires. */
+  public boolean isExpired(Instant now) {
+    return expiresAt != null && !now.isBefore(expiresAt);
   }
 }

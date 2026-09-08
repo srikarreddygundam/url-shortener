@@ -170,3 +170,39 @@ Entry format:
   `./mvnw verify` on the engineer's machine.
 - **Decision:** Event-decoupled analytics approved; the event is the
   documented seam where a queue replaces in-process dispatch at scale.
+
+---
+
+## Entry 7 — Link expiration as a brownfield change (Phase 3)
+
+- **Task:** Change request against the existing system: links must be able to
+  expire (docs/scenarios/brownfield.md holds the impact analysis).
+- **Context provided to AI:** The existing codebase, the change request, and
+  an explicit constraint: smallest reasonable diff, zero behavior change for
+  existing links, existing tests must pass unmodified wherever possible.
+- **AI suggestion:** Three parts: (1) a repository query
+  `findByCodeAndExpiresAtAfter(...)` so expired links simply resolve as
+  not-found; (2) a scheduled cleanup job deleting expired rows; (3) marking
+  the new column NOT NULL with a far-future default.
+- **Engineer review:** Rejected all three. (1) collapses "expired" into
+  "not found" — an expired link must return 410 Gone, which requires loading
+  the row and checking in code (zero extra query cost, correct semantics).
+  (2) is scope creep: deleting rows destroys click history and the 410
+  signal; retention is a separate future requirement. (3) NOT NULL with a
+  sentinel default is worse than NULL semantics — NULL cleanly means "never
+  expires" and requires no backfill of existing rows.
+- **Engineer modification:** Nullable `expires_at` (V3), `isExpired(now)` on
+  the entity with an exact-boundary rule, expiry check in
+  `resolveForRedirect` before the click event (expired visits record no
+  click), creation-time rejection of past expiry, additive API fields.
+  Retained the old constructor and `create` signatures as delegates so the
+  pre-existing test suite compiles and passes unchanged — that suite is the
+  regression net for this change.
+- **Rejected:** query-level filtering (wrong status code); cleanup job
+  (scope creep, destroys history); NOT NULL sentinel default.
+- **Validation:** Boundary tests on `isExpired`; service tests for past/now
+  rejection and expired-redirect-records-no-click; 410 web test; integration
+  tests for past-expiry 400, future-expiry redirect, and the no-expiry
+  regression path — `./mvnw verify` executed on the engineer's machine.
+- **Decision:** Minimal-diff expiration approved; rollback stays safe (the
+  column is additive and ignored by prior code).

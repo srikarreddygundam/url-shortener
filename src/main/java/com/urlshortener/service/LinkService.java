@@ -3,6 +3,7 @@ package com.urlshortener.service;
 import com.urlshortener.domain.Link;
 import com.urlshortener.repository.LinkRepository;
 import java.time.Clock;
+import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
@@ -44,17 +45,28 @@ public class LinkService {
    * transaction rollback-only and break the retry.
    */
   public Link create(String rawUrl) {
+    return create(rawUrl, null);
+  }
+
+  public Link create(String rawUrl, Instant expiresAt) {
     String longUrl = urlValidator.validate(rawUrl);
+    validateExpiration(expiresAt);
     for (int attempt = 1; attempt <= MAX_CODE_ATTEMPTS; attempt++) {
       String code = codeGenerator.newCode();
       try {
-        return linkRepository.saveAndFlush(new Link(code, longUrl, clock.instant()));
+        return linkRepository.saveAndFlush(new Link(code, longUrl, clock.instant(), expiresAt));
       } catch (DataIntegrityViolationException e) {
         log.warn("Short code collision, attempt {}/{}", attempt, MAX_CODE_ATTEMPTS);
       }
     }
     throw new CodeGenerationException(
         "Could not generate a unique short code after " + MAX_CODE_ATTEMPTS + " attempts");
+  }
+
+  private void validateExpiration(Instant expiresAt) {
+    if (expiresAt != null && !expiresAt.isAfter(clock.instant())) {
+      throw new InvalidExpirationException("expiresAt must be in the future");
+    }
   }
 
   public Link getByCode(String code) {
@@ -69,6 +81,10 @@ public class LinkService {
    */
   public Link resolveForRedirect(String code, String referrer) {
     Link link = getByCode(code);
+    if (link.isExpired(clock.instant())) {
+      // No click event either: an expired link produced no redirect.
+      throw new LinkExpiredException(code);
+    }
     try {
       eventPublisher.publishEvent(new LinkClickedEvent(link.getId(), clock.instant(), referrer));
     } catch (RuntimeException e) {

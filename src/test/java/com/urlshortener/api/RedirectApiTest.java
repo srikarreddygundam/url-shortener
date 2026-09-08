@@ -4,9 +4,11 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.urlshortener.domain.Link;
+import com.urlshortener.service.LinkExpiredException;
 import com.urlshortener.service.LinkNotFoundException;
 import com.urlshortener.service.LinkService;
 import java.time.Instant;
@@ -40,6 +42,16 @@ class RedirectApiTest {
     mvc.perform(get("/Ab3xY9z").header("Referer", "https://news.example.org/story"))
         .andExpect(status().isFound())
         .andExpect(header().string("Location", "https://example.com/docs"));
+  }
+
+  @Test
+  void redirect_forExpiredLink_returns410Gone() throws Exception {
+    when(linkService.resolveForRedirect("Xp1ry77", null))
+        .thenThrow(new LinkExpiredException("Xp1ry77"));
+
+    mvc.perform(get("/Xp1ry77"))
+        .andExpect(status().isGone())
+        .andExpect(jsonPath("$.detail").value("Link 'Xp1ry77' has expired"));
   }
 
   @Test

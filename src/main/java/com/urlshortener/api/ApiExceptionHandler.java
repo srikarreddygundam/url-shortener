@@ -1,7 +1,9 @@
 package com.urlshortener.api;
 
 import com.urlshortener.service.CodeGenerationException;
+import com.urlshortener.service.InvalidExpirationException;
 import com.urlshortener.service.InvalidUrlException;
+import com.urlshortener.service.LinkExpiredException;
 import com.urlshortener.service.LinkNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +26,20 @@ public class ApiExceptionHandler {
     return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
   }
 
+  @ExceptionHandler(InvalidExpirationException.class)
+  public ProblemDetail handleInvalidExpiration(InvalidExpirationException ex) {
+    return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+  }
+
   @ExceptionHandler(LinkNotFoundException.class)
   public ProblemDetail handleNotFound(LinkNotFoundException ex) {
     return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+  }
+
+  /** 410, not 404: the link existed and is deliberately gone. */
+  @ExceptionHandler(LinkExpiredException.class)
+  public ProblemDetail handleExpired(LinkExpiredException ex) {
+    return ProblemDetail.forStatusAndDetail(HttpStatus.GONE, ex.getMessage());
   }
 
   @ExceptionHandler(CodeGenerationException.class)

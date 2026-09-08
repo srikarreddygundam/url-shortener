@@ -1,5 +1,6 @@
 package com.urlshortener.api;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -35,7 +36,7 @@ class LinkApiTest {
 
   @Test
   void createLink_forValidUrl_returns201WithShortUrl() throws Exception {
-    when(linkService.create("https://example.com/docs"))
+    when(linkService.create("https://example.com/docs", null))
         .thenReturn(new Link("Ab3xY9z", "https://example.com/docs", Instant.parse("2026-09-08T12:00:00Z")));
 
     mvc.perform(
@@ -58,8 +59,29 @@ class LinkApiTest {
   }
 
   @Test
+  void createLink_withFutureExpiry_echoesExpiresAtInResponse() throws Exception {
+    Instant expiry = Instant.parse("2026-12-31T00:00:00Z");
+    when(linkService.create("https://example.com/campaign", expiry))
+        .thenReturn(
+            new Link(
+                "Xp1ry77",
+                "https://example.com/campaign",
+                Instant.parse("2026-09-08T12:00:00Z"),
+                expiry));
+
+    mvc.perform(
+            post("/api/links")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(
+                    "{\"url\":\"https://example.com/campaign\","
+                        + "\"expiresAt\":\"2026-12-31T00:00:00Z\"}"))
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.expiresAt").value("2026-12-31T00:00:00Z"));
+  }
+
+  @Test
   void createLink_forRejectedUrl_returns400ProblemDetail() throws Exception {
-    when(linkService.create(anyString()))
+    when(linkService.create(anyString(), any()))
         .thenThrow(new InvalidUrlException("Only http and https URLs are supported"));
 
     mvc.perform(

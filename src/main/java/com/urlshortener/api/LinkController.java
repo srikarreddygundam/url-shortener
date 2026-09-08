@@ -36,7 +36,7 @@ public class LinkController {
 
   @PostMapping
   public ResponseEntity<LinkResponse> create(@Valid @RequestBody CreateLinkRequest request) {
-    Link link = linkService.create(request.url());
+    Link link = linkService.create(request.url(), request.expiresAt());
     LinkResponse response = LinkResponse.from(link, properties.baseUrl());
     return ResponseEntity.created(URI.create(response.shortUrl())).body(response);
   }
