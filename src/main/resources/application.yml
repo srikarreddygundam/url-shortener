@@ -13,6 +13,11 @@ spring:
       # Flyway owns the schema; Hibernate only validates entities against it.
       ddl-auto: validate
 
+  mvc:
+    problemdetails:
+      # RFC 7807 problem+json for framework-raised errors, matching our own handlers.
+      enabled: true
+
 management:
   endpoints:
     web:
