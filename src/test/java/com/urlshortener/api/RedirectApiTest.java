@@ -24,7 +24,7 @@ class RedirectApiTest {
 
   @Test
   void redirect_forKnownCode_returns302ToTheLongUrl() throws Exception {
-    when(linkService.getByCode("Ab3xY9z"))
+    when(linkService.resolveForRedirect("Ab3xY9z", null))
         .thenReturn(new Link("Ab3xY9z", "https://example.com/docs", Instant.now()));
 
     mvc.perform(get("/Ab3xY9z"))
@@ -33,8 +33,19 @@ class RedirectApiTest {
   }
 
   @Test
+  void redirect_passesReferrerHeaderAlongForAnalytics() throws Exception {
+    when(linkService.resolveForRedirect("Ab3xY9z", "https://news.example.org/story"))
+        .thenReturn(new Link("Ab3xY9z", "https://example.com/docs", Instant.now()));
+
+    mvc.perform(get("/Ab3xY9z").header("Referer", "https://news.example.org/story"))
+        .andExpect(status().isFound())
+        .andExpect(header().string("Location", "https://example.com/docs"));
+  }
+
+  @Test
   void redirect_forUnknownCode_returns404() throws Exception {
-    when(linkService.getByCode("missing1")).thenThrow(new LinkNotFoundException("missing1"));
+    when(linkService.resolveForRedirect("missing1", null))
+        .thenThrow(new LinkNotFoundException("missing1"));
 
     mvc.perform(get("/missing1")).andExpect(status().isNotFound());
   }

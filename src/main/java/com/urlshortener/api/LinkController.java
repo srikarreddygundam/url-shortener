@@ -2,8 +2,10 @@ package com.urlshortener.api;
 
 import com.urlshortener.api.dto.CreateLinkRequest;
 import com.urlshortener.api.dto.LinkResponse;
+import com.urlshortener.api.dto.LinkStatsResponse;
 import com.urlshortener.config.AppProperties;
 import com.urlshortener.domain.Link;
+import com.urlshortener.service.ClickAnalyticsService;
 import com.urlshortener.service.LinkService;
 import jakarta.validation.Valid;
 import java.net.URI;
@@ -20,10 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class LinkController {
 
   private final LinkService linkService;
+  private final ClickAnalyticsService clickAnalyticsService;
   private final AppProperties properties;
 
-  public LinkController(LinkService linkService, AppProperties properties) {
+  public LinkController(
+      LinkService linkService,
+      ClickAnalyticsService clickAnalyticsService,
+      AppProperties properties) {
     this.linkService = linkService;
+    this.clickAnalyticsService = clickAnalyticsService;
     this.properties = properties;
   }
 
@@ -37,5 +44,10 @@ public class LinkController {
   @GetMapping("/{code:[0-9A-Za-z]+}")
   public LinkResponse getByCode(@PathVariable String code) {
     return LinkResponse.from(linkService.getByCode(code), properties.baseUrl());
+  }
+
+  @GetMapping("/{code:[0-9A-Za-z]+}/stats")
+  public LinkStatsResponse getStats(@PathVariable String code) {
+    return LinkStatsResponse.from(clickAnalyticsService.statsFor(code));
   }
 }

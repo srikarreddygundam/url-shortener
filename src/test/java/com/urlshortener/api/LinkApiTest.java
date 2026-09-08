@@ -11,9 +11,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.urlshortener.config.AppProperties;
 import com.urlshortener.domain.Link;
+import com.urlshortener.service.ClickAnalyticsService;
 import com.urlshortener.service.InvalidUrlException;
 import com.urlshortener.service.LinkNotFoundException;
 import com.urlshortener.service.LinkService;
+import com.urlshortener.service.LinkStats;
 import java.time.Instant;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ class LinkApiTest {
 
   @Autowired private MockMvc mvc;
   @MockitoBean private LinkService linkService;
+  @MockitoBean private ClickAnalyticsService clickAnalyticsService;
 
   @Test
   void createLink_forValidUrl_returns201WithShortUrl() throws Exception {
@@ -84,5 +87,25 @@ class LinkApiTest {
     mvc.perform(get("/api/links/missing1"))
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("$.detail").value("No link found for code 'missing1'"));
+  }
+
+  @Test
+  void getStats_forKnownCode_returnsClickTotals() throws Exception {
+    when(clickAnalyticsService.statsFor("Ab3xY9z"))
+        .thenReturn(new LinkStats("Ab3xY9z", 7, Instant.parse("2026-09-08T12:34:56Z")));
+
+    mvc.perform(get("/api/links/Ab3xY9z/stats"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.code").value("Ab3xY9z"))
+        .andExpect(jsonPath("$.totalClicks").value(7))
+        .andExpect(jsonPath("$.lastClickAt").value("2026-09-08T12:34:56Z"));
+  }
+
+  @Test
+  void getStats_forUnknownCode_returns404ProblemDetail() throws Exception {
+    when(clickAnalyticsService.statsFor("missing1"))
+        .thenThrow(new LinkNotFoundException("missing1"));
+
+    mvc.perform(get("/api/links/missing1/stats")).andExpect(status().isNotFound());
   }
 }

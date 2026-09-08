@@ -119,3 +119,54 @@ Entry format:
 - **Validation:** Parameterized validator tests including `javascript:`,
   `file:`, `data:` schemes; web test asserting 302 + Location header.
 - **Decision:** 302 + parse-based allowlist validation approved.
+
+---
+
+## Entry 5 — Quality gate flags the AI's code on first execution (Phase 1)
+
+- **Task:** First full run of `./mvnw verify` on the engineer's machine.
+- **Context:** The gate had been configured before any feature code existed.
+- **What happened:** Compile and all 31 tests passed; Checkstyle reported 12
+  violations in AI-written code — lowercase `log` logger constants and
+  underscore-separated test method names.
+- **Engineer review:** Deliberate decision, not an auto-fix. Lowercase `log`
+  is the house/Spring-ecosystem logger convention and underscore test names
+  are intentional behavior-describing names — the config should encode team
+  conventions, not force renames. ConstantName now exempts `log`; MethodName
+  is suppressed for test sources only and stays strict for main code.
+- **Rejected:** Renaming code to satisfy the default ruleset.
+- **Validation:** Re-ran `./mvnw verify` on the engineer's machine —
+  BUILD SUCCESS, 31 tests, 0 violations (Java 21.0.12.1, Boot 3.5.5). App
+  smoke-tested over HTTP: create returned 201 with a code; GET /{code}
+  returned 302 with the correct Location header.
+- **Decision:** Convention-encoding config committed by the engineer.
+
+---
+
+## Entry 6 — Analytics design under an ambiguous requirement (Phase 2)
+
+- **Task:** Implement "the service should provide analytics" — undefined in
+  the assignment (see docs/scenarios/ambiguous.md for the PO questions and
+  the prototype assumption).
+- **Context provided to AI:** The ambiguity doc's assumption (per-click
+  events, no PII), existing redirect path, Flyway setup.
+- **AI suggestion:** Insert a click row synchronously inside the redirect
+  handler, storing IP address and full user-agent "for richer analytics."
+- **Engineer review:** Rejected both parts. A synchronous insert puts a write
+  on the latency-sensitive read path and couples redirect success to
+  analytics storage health — an analytics outage would take down the product.
+  IP + user-agent is personal data; collecting it is a compliance decision a
+  prototype should not make by default.
+- **Engineer modification:** Redirect publishes a LinkClickedEvent; an
+  @Async listener persists timestamp + referrer only, catching and logging
+  its own failures. Referrer (client-controlled) is null-normalized and
+  truncated to the column limit. Event publication itself is also guarded so
+  even publisher failure cannot break a redirect.
+- **Rejected:** Synchronous click insert on the redirect path; storing IP and
+  user-agent.
+- **Validation:** Unit tests for recorder failure-swallowing, truncation, and
+  publisher-failure isolation; integration test drives two real redirects and
+  waits (Awaitility) for the async stats to reach 2 — executed via
+  `./mvnw verify` on the engineer's machine.
+- **Decision:** Event-decoupled analytics approved; the event is the
+  documented seam where a queue replaces in-process dispatch at scale.

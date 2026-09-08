@@ -3,11 +3,13 @@ package com.urlshortener.api;
 import com.urlshortener.domain.Link;
 import com.urlshortener.service.LinkService;
 import java.net.URI;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @Controller
 public class RedirectController {
@@ -27,8 +29,10 @@ public class RedirectController {
    * paths; literal mappings like /actuator take precedence regardless.
    */
   @GetMapping("/{code:[0-9A-Za-z]+}")
-  public ResponseEntity<Void> redirect(@PathVariable String code) {
-    Link link = linkService.getByCode(code);
+  public ResponseEntity<Void> redirect(
+      @PathVariable String code,
+      @RequestHeader(value = HttpHeaders.REFERER, required = false) String referrer) {
+    Link link = linkService.resolveForRedirect(code, referrer);
     return ResponseEntity.status(HttpStatus.FOUND)
         .location(URI.create(link.getLongUrl()))
         .build();

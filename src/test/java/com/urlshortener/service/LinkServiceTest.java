@@ -3,6 +3,7 @@ package com.urlshortener.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -15,8 +16,10 @@ import com.urlshortener.repository.LinkRepository;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 
 class LinkServiceTest {
@@ -25,11 +28,17 @@ class LinkServiceTest {
 
   private final LinkRepository linkRepository = mock(LinkRepository.class);
   private final CodeGenerator codeGenerator = mock(CodeGenerator.class);
+  private final ApplicationEventPublisher eventPublisher = mock(ApplicationEventPublisher.class);
   private final UrlValidator urlValidator =
       new UrlValidator(new AppProperties("http://localhost:8080", 7, 2048));
 
   private final LinkService service =
-      new LinkService(linkRepository, codeGenerator, urlValidator, Clock.fixed(NOW, ZoneOffset.UTC));
+      new LinkService(
+          linkRepository,
+          codeGenerator,
+          urlValidator,
+          Clock.fixed(NOW, ZoneOffset.UTC),
+          eventPublisher);
 
   @Test
   void createSavesLinkWithGeneratedCodeAndTimestamp() {
@@ -79,10 +88,37 @@ class LinkServiceTest {
 
   @Test
   void getByCodeThrowsNotFoundForUnknownCode() {
-    when(linkRepository.findByCode("missing1")).thenReturn(java.util.Optional.empty());
+    when(linkRepository.findByCode("missing1")).thenReturn(Optional.empty());
 
     assertThatThrownBy(() -> service.getByCode("missing1"))
         .isInstanceOf(LinkNotFoundException.class)
         .hasMessageContaining("missing1");
+  }
+
+  @Test
+  void resolveForRedirect_publishesClickEventWithLinkIdAndReferrer() {
+    Link link = new Link("Ab3xY9z", "https://example.com", NOW);
+    when(linkRepository.findByCode("Ab3xY9z")).thenReturn(Optional.of(link));
+
+    service.resolveForRedirect("Ab3xY9z", "https://twitter.com/somepost");
+
+    ArgumentCaptor<LinkClickedEvent> published = ArgumentCaptor.forClass(LinkClickedEvent.class);
+    verify(eventPublisher).publishEvent(published.capture());
+    assertThat(published.getValue().linkId()).isEqualTo(link.getId());
+    assertThat(published.getValue().occurredAt()).isEqualTo(NOW);
+    assertThat(published.getValue().referrer()).isEqualTo("https://twitter.com/somepost");
+  }
+
+  @Test
+  void resolveForRedirect_stillReturnsLinkWhenEventPublicationFails() {
+    Link link = new Link("Ab3xY9z", "https://example.com", NOW);
+    when(linkRepository.findByCode("Ab3xY9z")).thenReturn(Optional.of(link));
+    doThrow(new IllegalStateException("event infrastructure down"))
+        .when(eventPublisher)
+        .publishEvent(any(Object.class));
+
+    Link resolved = service.resolveForRedirect("Ab3xY9z", null);
+
+    assertThat(resolved).isSameAs(link);
   }
 }

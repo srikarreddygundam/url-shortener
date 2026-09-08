@@ -5,6 +5,7 @@ import com.urlshortener.repository.LinkRepository;
 import java.time.Clock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +19,19 @@ public class LinkService {
   private final CodeGenerator codeGenerator;
   private final UrlValidator urlValidator;
   private final Clock clock;
+  private final ApplicationEventPublisher eventPublisher;
 
   public LinkService(
       LinkRepository linkRepository,
       CodeGenerator codeGenerator,
       UrlValidator urlValidator,
-      Clock clock) {
+      Clock clock,
+      ApplicationEventPublisher eventPublisher) {
     this.linkRepository = linkRepository;
     this.codeGenerator = codeGenerator;
     this.urlValidator = urlValidator;
     this.clock = clock;
+    this.eventPublisher = eventPublisher;
   }
 
   /**
@@ -57,5 +61,19 @@ public class LinkService {
     return linkRepository
         .findByCode(code)
         .orElseThrow(() -> new LinkNotFoundException(code));
+  }
+
+  /**
+   * Resolves a code for the redirect path and emits a click event. Event
+   * publication is guarded: analytics must never break or slow a redirect.
+   */
+  public Link resolveForRedirect(String code, String referrer) {
+    Link link = getByCode(code);
+    try {
+      eventPublisher.publishEvent(new LinkClickedEvent(link.getId(), clock.instant(), referrer));
+    } catch (RuntimeException e) {
+      log.error("Failed to publish click event for code {}", code, e);
+    }
+    return link;
   }
 }
