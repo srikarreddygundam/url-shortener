@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+    "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+<!--
+  Test methods use underscore_separated behavior-describing names on purpose
+  (e.g. createLink_forValidUrl_returns201WithShortUrl); MethodName stays
+  strict for main sources.
+-->
+<suppressions>
+  <suppress checks="MethodName" files="[\\/]src[\\/]test[\\/]"/>
+</suppressions>

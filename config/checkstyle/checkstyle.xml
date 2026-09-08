@@ -10,6 +10,10 @@
   <property name="charset" value="UTF-8"/>
   <property name="severity" value="error"/>
 
+  <module name="SuppressionFilter">
+    <property name="file" value="config/checkstyle/checkstyle-suppressions.xml"/>
+  </module>
+
   <module name="LineLength">
     <property name="max" value="120"/>
     <property name="ignorePattern" value="^ *\* *[^ ]+$|href|http://|https://"/>
@@ -34,7 +38,10 @@
     <module name="ParameterNumber">
       <property name="max" value="7"/>
     </module>
-    <module name="ConstantName"/>
+    <!-- "log" exempted: lowercase logger fields are the house convention. -->
+    <module name="ConstantName">
+      <property name="format" value="^log$|^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
+    </module>
     <module name="LocalVariableName"/>
     <module name="MemberName"/>
     <module name="MethodName"/>
