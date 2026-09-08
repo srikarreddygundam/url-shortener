@@ -20,9 +20,7 @@ The implementation is developed through three scenarios: greenfield development,
 ./mvnw spring-boot:run
 ```
 
-Starts on `http://localhost:8080` with an in-memory H2 database
-(PostgreSQL-compatibility mode); Flyway applies the schema on startup.
-Data lives for the life of the process — a deliberate prototype choice.
+Starts on `http://localhost:8080` using an in-memory H2 database in PostgreSQL compatibility mode. Flyway applies the schema at startup. Since H2 is used for the prototype, data is reset when the application stops.
 
 ## Build and test
 
@@ -71,16 +69,7 @@ Health: `GET /actuator/health`.
 
 ## Quality gates
 
-**Executed and passing** (Java 21.0.12, macOS, `./mvnw verify`): compile,
-full test suite, Checkstyle (0 violations), JaCoCo report. The suite grew
-per phase as gates were run — 31 tests (P1) → 45 (P2) → 62 (P4) → current
-count in your build output. Every endpoint was additionally smoke-tested
-over HTTP after each phase. `.github/workflows/ci.yml` runs the same
-`./mvnw verify` gate on push and pull request.
-
-**Recommended for a production pipeline, not run here:** OWASP
-dependency-check, SpotBugs/Sonar static analysis, container image scanning,
-load/performance testing, and coverage thresholds enforced in the build.
+I used `./mvnw verify` as the main validation step. It runs compilation, the full test suite, Checkstyle, and JaCoCo reporting. I also smoke-tested the main API flows locally after implementation changes. The GitHub Actions workflow runs the same Maven verification step on push and pull requests. For a production pipeline, I would also consider dependency scanning, static analysis, container scanning, performance testing, and enforced coverage thresholds.
 
 ## Key assumptions
 
