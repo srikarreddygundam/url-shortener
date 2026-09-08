@@ -4,11 +4,11 @@ A URL shortener service built as a software engineering exercise, covering core 
 
 The implementation is developed through three scenarios: greenfield development, an ambiguous analytics requirement, and a brownfield expiration change.
 
-- Architecture and design decisions: `[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)`
-- API contract: `[docs/openapi.yaml](docs/openapi.yaml)`
-- Scenario walkthroughs: `[docs/scenarios/](docs/scenarios/)`
-- Engineering decision and AI usage notes: `docs/AI_USAGE.md`
-- Final summary, trade-offs, limitations: `[docs/ENGINEERING_SUMMARY.md](docs/ENGINEERING_SUMMARY.md)`
+- Architecture and design decisions: `docs/ARCHITECTURE.md`
+- API contract: `docs/openapi.yaml`
+- Scenario walkthroughs: `docs/scenarios/`
+- Engineering and AI usage notes: `docs/AI_USAGE.md`
+- Final engineering summary, trade-offs, and limitations: `docs/ENGINEERING_SUMMARY.md`
 
 ## Prerequisites
 
