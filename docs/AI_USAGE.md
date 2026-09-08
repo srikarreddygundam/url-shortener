@@ -1,8 +1,7 @@
-# AI Usage Log
+# AI Usage Notes
 
-Traceability log for AI-assisted work on this project. One entry per significant
-task. Every AI suggestion was reviewed before merge; nothing landed without
-engineer sign-off. Entries record what was generated, what was edited, and what
+I used AI during selected parts of this assignment as a supporting engineering tool. This file records some of the more meaningful cases where it helped with design review, implementation ideas, testing, or identifying issues.
+The final decisions and implementation changes were reviewed and validated by me before being included in the project. Entries record what was generated, what was edited, and what
 was rejected, with rationale.
 
 Secure usage note: no secrets, credentials, personal data, or proprietary code
@@ -12,13 +11,11 @@ limited to this repository and the assignment text.
 Entry format:
 
 - **Task** — the engineering problem being solved
-- **Context provided to AI** — what the engineer supplied
-- **AI suggestion** — summary of what the AI proposed
-- **Engineer review** — what was agreed with
-- **Engineer modification** — what was changed manually
-- **Rejected** — anything rejected, and why
-- **Validation** — how the final result was verified
-- **Decision** — what was approved and by whom
+- **Initial approach** — how I planned to solve it
+- **AI input** — suggestions or reviews I received from AI
+- **What I changed** — changes I made after reviewing the suggestions
+- **Validation** — how I tested and verified the result
+- **Final decision** — what I decided to use in the final implementation
 
 ---
 
@@ -217,8 +214,7 @@ Entry format:
 - **Context provided to AI:** Existing ApiExceptionHandler, the requirement
   that framework behavior (404 for unknown paths, 405 for wrong methods,
   400 for malformed JSON) must not change.
-- **AI suggestion:** A plain `@ExceptionHandler(Exception.class)` returning
-  500.
+- **AI suggestion:** A plain `@ExceptionHandler(Exception.class)` returning 500.
 - **Engineer review:** As written that handler can swallow Spring's own
   ErrorResponse exceptions and turn 404s/405s into 500s. Kept the catch-all
   but relies on advice precedence (Boot's problem-details advice handles
