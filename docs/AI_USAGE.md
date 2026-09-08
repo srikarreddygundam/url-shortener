@@ -1,12 +1,12 @@
 # AI Usage Notes
 
-I used AI during selected parts of this assignment as a supporting engineering tool. This file records some of the more meaningful cases where it helped with design review, implementation ideas, testing, or identifying issues.
-The final decisions and implementation changes were reviewed and validated by me before being included in the project. Entries record what was generated, what was edited, and what
-was rejected, with rationale.
+I used AI during selected parts of this assignment as a supporting engineering tool.
 
-Secure usage note: no secrets, credentials, personal data, or proprietary code
-were provided to the AI assistant at any point. Context given to the AI was
-limited to this repository and the assignment text.
+This document captures a few of the more useful cases where AI helped with design review, implementation ideas, testing, or identifying potential gaps.
+
+I reviewed the suggestions before applying them and validated the final implementation through code review, tests, and local execution.
+
+No credentials, personal information, or proprietary data were included in prompts.
 
 Entry format:
 
@@ -123,9 +123,7 @@ Entry format:
 
 - **Task:** First full run of `./mvnw verify` on the engineer's machine.
 - **Context:** The gate had been configured before any feature code existed.
-- **What happened:** Compile and all 31 tests passed; Checkstyle reported 12
-  violations in AI-written code — lowercase `log` logger constants and
-  underscore-separated test method names.
+- **What happened:** Compile and all 31 tests passed; During the first full verification run, Checkstyle flagged logger naming and test method naming. I adjusted the rules to match the conventions used in the project and reran the build successfully.
 - **Engineer review:** Deliberate decision, not an auto-fix. Lowercase `log`
   is the house/Spring-ecosystem logger convention and underscore test names
   are intentional behavior-describing names — the config should encode team
