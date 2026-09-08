@@ -2,9 +2,18 @@
 
 ## 1. What was built
 
-I built a runnable URL shortener with short-link creation, redirect handling, link details, click analytics, and optional expiration.
+I built a runnable URL shortener that supports:
 
-The implementation was completed in several phases, with tests and quality checks added as the functionality evolved. The repository also includes architecture notes, scenario walkthroughs, API documentation, and the engineering decisions made during development.
+- creating short links through `POST /api/links`
+- redirecting through `GET /{code}`
+- retrieving link details
+- basic click analytics
+- optional link expiration
+- validation and consistent error handling
+
+The implementation was completed incrementally, with tests and validation added as each feature was introduced.
+
+The repository also includes architecture notes, API documentation, scenario walkthroughs, and the main engineering decisions made during development.
 
 ## 2. Architecture
 
@@ -15,22 +24,22 @@ ARCHITECTURE.md.
 
 ## 3. Requirement interpretation
 
-The assignment's scenario ("core APIs, analytics, and reliability
-features") was normalized into: a uniqueness-constrained write path, a
-latency-sensitive read path, analytics decoupled from the user path, and
-consistent error semantics. Undefined terms were surfaced rather than
-guessed: "analytics" became the documented ambiguous scenario;
-"reliability" was interpreted as validation, failure isolation, collision
-safety, and a health endpoint — not HA, which is out of prototype scope.
+I broke the requirement into three main areas: creating short URLs, resolving them efficiently, and collecting basic analytics without affecting redirect reliability.I treated link creation as the write path and redirects as the more latency-sensitive read path. The assignment did not fully define what "analytics" or "reliability" meant, so I documented those assumptions rather than silently adding features. For this prototype, reliability mainly means validation, collision handling, failure isolation, predictable error responses, and basic health monitoring.
 
 ## 4. Task decomposition
 
-Phased, each phase gated before the next: P0 scaffold + quality gates →
-P1 greenfield core → P2 analytics (ambiguous) → P3 expiration (brownfield)
-→ P4 hardening → P5 documentation. Within phases: schema → domain →
-service → API → tests. Dependencies honored (schema first; the brownfield
-scenario deliberately last of the three so a real codebase existed to
-change).
+I implemented the project in phases so each feature could be tested before adding the next one.
+
+The rough sequence was:
+
+1. Project setup and build validation
+2. Core short-link creation and redirect flow
+3. Analytics
+4. Link expiration
+5. Error handling and reliability improvements
+6. Documentation and final validation
+
+Within each feature, I generally worked from schema and domain changes through the service layer, API layer, and then tests.
 
 ## 5. Greenfield scenario
 
@@ -59,8 +68,13 @@ different product answer would touch.
 
 ## 8. AI usage during development
 
-I used AI selectively during development for things like reviewing design options, suggesting test cases, checking edge cases, and helping identify potential gaps.
-I did not treat generated suggestions as final output. I reviewed the suggestions against the existing design, modified or rejected them where necessary, and ran the implementation and tests locally before accepting changes.
+I used AI selectively during the assignment as a supporting engineering tool.
+
+It was useful for reviewing design options, suggesting test cases, checking edge cases, and identifying areas that needed additional validation.
+
+I reviewed the suggestions before applying them and changed or rejected approaches when they did not fit the design or introduced unnecessary complexity.
+
+The implementation and tests were still validated locally before changes were considered complete.
 
 Examples of those decisions are documented in `docs/AI_USAGE.md`.
 
