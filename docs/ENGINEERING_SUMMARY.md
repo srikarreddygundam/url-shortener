@@ -2,11 +2,9 @@
 
 ## 1. What was built
 
-A runnable URL shortener: create short links (`POST /api/links`), redirect
-(`GET /{code}`, 302), link details and click stats endpoints, per-click
-analytics recorded asynchronously, and link expiration (410 Gone) — built
-in reviewable phases with a git history that mirrors them, quality gates
-executed per phase, and an AI-usage traceability log.
+I built a runnable URL shortener with short-link creation, redirect handling, link details, click analytics, and optional expiration.
+
+The implementation was completed in several phases, with tests and quality checks added as the functionality evolved. The repository also includes architecture notes, scenario walkthroughs, API documentation, and the engineering decisions made during development.
 
 ## 2. Architecture
 
