@@ -98,8 +98,8 @@ error contract including leak prevention), and end-to-end integration
 (create→redirect→stats through the real schema, async analytics via
 Awaitility, expiration flows, duplicate-URL behavior). `./mvnw verify`
 (compile, tests, Checkstyle, JaCoCo) executed on the engineer's machine
-each phase — verified runs grew from 31 (P1) to 45 (P2) to 62 (P4) to the
-current suite — plus manual HTTP smoke tests of every endpoint after every
+each phase — verified runs grew from 31 (P1) to 45 (P2) to 62 (P4) to 64 (final)
+— plus manual HTTP smoke tests of every endpoint after every
 phase. Concurrency is proven by a real multi-threaded creation test, not
 only by mocked collisions. CI (`.github/workflows/ci.yml`) runs the same
 gate per push/PR. Not run (recommended for production pipeline): OWASP
