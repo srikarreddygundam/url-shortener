@@ -6,6 +6,7 @@ through three documented scenarios (greenfield, ambiguous requirement,
 brownfield change request) with a full AI-usage traceability log.
 
 - Architecture and design decisions: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
+- API contract: [`docs/openapi.yaml`](docs/openapi.yaml)
 - Scenario walkthroughs: [`docs/scenarios/`](docs/scenarios/)
 - AI traceability log (generated / edited / rejected): [`docs/AI_USAGE.md`](docs/AI_USAGE.md)
 - Final summary, trade-offs, limitations: [`docs/ENGINEERING_SUMMARY.md`](docs/ENGINEERING_SUMMARY.md)
@@ -71,15 +72,16 @@ Health: `GET /actuator/health`.
 
 ## Quality gates
 
-Executed locally on every phase via `./mvnw verify` (compile, tests,
-Checkstyle, JaCoCo), plus manual HTTP smoke tests of every new endpoint
-after each phase. Verified runs during development: Phase 1 — 31 tests;
-Phase 2 — 45 tests; Phases 3–4 grow the suite further (see the `Tests run:`
-line of your build).
+**Executed and passing** (Java 21.0.12, macOS, `./mvnw verify`): compile,
+full test suite, Checkstyle (0 violations), JaCoCo report. The suite grew
+per phase as gates were run — 31 tests (P1) → 45 (P2) → 62 (P4) → current
+count in your build output. Every endpoint was additionally smoke-tested
+over HTTP after each phase. `.github/workflows/ci.yml` runs the same
+`./mvnw verify` gate on push and pull request.
 
-Recommended for a production pipeline but **not** run here: OWASP
-dependency-check, SpotBugs/Sonar static analysis, container scanning, load
-tests, and CI enforcement of all of the above per commit.
+**Recommended for a production pipeline, not run here:** OWASP
+dependency-check, SpotBugs/Sonar static analysis, container image scanning,
+load/performance testing, and coverage thresholds enforced in the build.
 
 ## Key assumptions
 

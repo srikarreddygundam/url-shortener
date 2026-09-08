@@ -231,3 +231,32 @@ Entry format:
   still 405, a service exception carrying a fake internal hostname returns
   500 whose body provably does not contain it.
 - **Decision:** Guarded catch-all approved as the last-resort handler.
+
+---
+
+## Entry 9 — Final review gaps: CI, API schema, concurrency evidence (Phase 6)
+
+- **Task:** Senior-engineer review of the whole submission against the
+  assignment's deliverables and evaluation criteria, before submission.
+- **Context provided to AI:** The assignment text, the finished repository,
+  and the instruction to look for gaps rather than confirm completeness.
+- **Findings the review surfaced (engineer-confirmed):**
+  1. No CI configuration, despite quality gates being a stated requirement —
+     gates existed but nothing enforced them per commit.
+  2. No API schema definition. Deliverable R5 asks for "API/schema
+     definitions"; the DB schema was covered by Flyway, but the HTTP
+     contract existed only as code and README examples.
+  3. Concurrency was only proven with mocked collisions. The design claim
+     ("the DB constraint, not a pre-check, is what makes creation correct
+     under concurrency") had no test exercising real threads.
+- **Engineer decisions:** Added `.github/workflows/ci.yml` running the same
+  `./mvnw verify` gate; added a hand-written `docs/openapi.yaml`; added
+  `ConcurrentLinkCreationIntegrationTest` (16 threads released from a common
+  latch, asserting distinct codes and full resolvability).
+- **Rejected:** Adding springdoc-openapi to generate the spec at runtime.
+  It is the better production answer (generated specs cannot drift from
+  code) but pulling a new runtime dependency and UI into the prototype at
+  the final step is a change I could not justify without re-validating the
+  whole build; the drift risk is recorded in limitations instead.
+- **Validation:** `./mvnw verify` re-run after these additions.
+- **Decision:** Approved with the springdoc trade-off documented.

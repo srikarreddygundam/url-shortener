@@ -1,0 +1,172 @@
+openapi: 3.0.3
+info:
+  title: URL Shortener API
+  version: 0.1.0
+  description: >
+    Create short links, follow them, and read click statistics.
+    Errors use RFC 7807 (application/problem+json).
+
+servers:
+  - url: http://localhost:8080
+    description: Local prototype
+
+paths:
+  /api/links:
+    post:
+      summary: Create a short link
+      operationId: createLink
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLinkRequest'
+      responses:
+        '201':
+          description: Link created
+          headers:
+            Location:
+              description: The generated short URL
+              schema: { type: string, format: uri }
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkResponse'
+        '400':
+          description: >
+            Invalid URL (blank, malformed, non-http(s) scheme, too long)
+            or expiresAt not in the future
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ProblemDetail' }
+        '500':
+          description: Unexpected error (generic message; details stay in server logs)
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ProblemDetail' }
+
+  /api/links/{code}:
+    get:
+      summary: Get link details
+      operationId: getLink
+      parameters:
+        - $ref: '#/components/parameters/Code'
+      responses:
+        '200':
+          description: Link details
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LinkResponse' }
+        '404':
+          description: No link with that code
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ProblemDetail' }
+
+  /api/links/{code}/stats:
+    get:
+      summary: Get click statistics for a link
+      operationId: getLinkStats
+      parameters:
+        - $ref: '#/components/parameters/Code'
+      responses:
+        '200':
+          description: Click statistics
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LinkStatsResponse' }
+        '404':
+          description: No link with that code
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ProblemDetail' }
+
+  /{code}:
+    get:
+      summary: Follow a short link
+      description: >
+        302 (not 301) so that repeat visits are not cached away from the
+        service — permanent caching would break click analytics and remove
+        the ability to expire a link.
+      operationId: redirect
+      parameters:
+        - $ref: '#/components/parameters/Code'
+      responses:
+        '302':
+          description: Redirect to the original URL
+          headers:
+            Location:
+              description: The original long URL
+              schema: { type: string, format: uri }
+        '404':
+          description: No link with that code
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ProblemDetail' }
+        '410':
+          description: The link existed but has expired
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ProblemDetail' }
+
+components:
+  parameters:
+    Code:
+      name: code
+      in: path
+      required: true
+      description: Short code (base62)
+      schema:
+        type: string
+        pattern: '^[0-9A-Za-z]+$'
+        example: Ab3xY9z
+
+  schemas:
+    CreateLinkRequest:
+      type: object
+      required: [url]
+      properties:
+        url:
+          type: string
+          format: uri
+          maxLength: 2048
+          description: Absolute http(s) URL to shorten
+          example: https://example.com/some/long/path
+        expiresAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: >
+            Optional expiry instant (UTC). Must be in the future.
+            Omitted or null means the link never expires.
+          example: '2026-12-31T00:00:00Z'
+
+    LinkResponse:
+      type: object
+      properties:
+        code: { type: string, example: Ab3xY9z }
+        shortUrl: { type: string, format: uri, example: 'http://localhost:8080/Ab3xY9z' }
+        longUrl: { type: string, format: uri, example: 'https://example.com/some/long/path' }
+        createdAt: { type: string, format: date-time }
+        expiresAt: { type: string, format: date-time, nullable: true }
+
+    LinkStatsResponse:
+      type: object
+      properties:
+        code: { type: string, example: Ab3xY9z }
+        totalClicks: { type: integer, format: int64, example: 42 }
+        lastClickAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Null when the link has never been clicked
+
+    ProblemDetail:
+      type: object
+      description: RFC 7807 problem detail
+      properties:
+        type: { type: string, example: 'about:blank' }
+        title: { type: string, example: 'Bad Request' }
+        status: { type: integer, example: 400 }
+        detail: { type: string, example: 'expiresAt must be in the future' }
+        instance: { type: string, example: '/api/links' }
