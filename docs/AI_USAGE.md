@@ -206,3 +206,28 @@ Entry format:
   regression path — `./mvnw verify` executed on the engineer's machine.
 - **Decision:** Minimal-diff expiration approved; rollback stays safe (the
   column is additive and ignored by prior code).
+
+---
+
+## Entry 8 — Catch-all error handling without breaking status codes (Phase 4)
+
+- **Task:** Hardening pass: unexpected exceptions must return a generic 500
+  problem detail — raw exception messages can leak internals (hostnames,
+  SQL, paths) to clients.
+- **Context provided to AI:** Existing ApiExceptionHandler, the requirement
+  that framework behavior (404 for unknown paths, 405 for wrong methods,
+  400 for malformed JSON) must not change.
+- **AI suggestion:** A plain `@ExceptionHandler(Exception.class)` returning
+  500.
+- **Engineer review:** As written that handler can swallow Spring's own
+  ErrorResponse exceptions and turn 404s/405s into 500s. Kept the catch-all
+  but relies on advice precedence (Boot's problem-details advice handles
+  framework exceptions first) plus an explicit `instanceof ErrorResponse`
+  rethrow as the guard, with a comment explaining why.
+- **Engineer modification:** Guarded rethrow; generic client message; full
+  stack trace to the log only.
+- **Rejected:** The unguarded catch-all.
+- **Validation:** ErrorContractApiTest — malformed JSON still 400, DELETE
+  still 405, a service exception carrying a fake internal hostname returns
+  500 whose body provably does not contain it.
+- **Decision:** Guarded catch-all approved as the last-resort handler.
