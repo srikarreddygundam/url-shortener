@@ -57,14 +57,12 @@ events, timestamp + referrer only, no IP/UA), and the isolation: an
 in-process `LinkClickedEvent` and one async listener are the only places a
 different product answer would touch.
 
-## 8. How AI was used
+## 8. AI usage during development
 
-As a drafting accelerator inside engineer-defined tasks: each task went to
-the AI with intent, constraints, and acceptance criteria; output was
-reviewed like a PR; the engineer ran all quality gates locally and
-committed every change. docs/AI_USAGE.md holds the per-task trace
-(context → suggestion → review → modification → rejection → validation →
-decision). No secrets or personal data entered prompts.
+I used AI selectively during development for things like reviewing design options, suggesting test cases, checking edge cases, and helping identify potential gaps.
+I did not treat generated suggestions as final output. I reviewed the suggestions against the existing design, modified or rejected them where necessary, and ran the implementation and tests locally before accepting changes.
+
+Examples of those decisions are documented in `docs/AI_USAGE.md`.
 
 ## 9. Where engineer judgment changed or rejected AI output
 
