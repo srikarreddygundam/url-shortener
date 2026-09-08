@@ -19,8 +19,7 @@
 [INFO] skip non existing resourceDirectory /Users/srikarreddygundam/Projects/url-shortener/src/test/resources
 [INFO] 
 [INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ url-shortener ---
-[INFO] Recompiling the module because of added or removed source files.
-[INFO] Compiling 13 source files with javac [debug parameters release 21] to target/test-classes
+[INFO] Nothing to compile - all classes are up to date.
 [INFO] 
 [INFO] --- surefire:3.5.3:test (default-test) @ url-shortener ---
 [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
@@ -29,8 +28,8 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running com.urlshortener.AnalyticsFlowIntegrationTest
-02:54:36.502 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.urlshortener.AnalyticsFlowIntegrationTest]: AnalyticsFlowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-02:54:36.588 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.AnalyticsFlowIntegrationTest
+02:59:27.369 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.urlshortener.AnalyticsFlowIntegrationTest]: AnalyticsFlowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+02:59:27.443 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.AnalyticsFlowIntegrationTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -41,27 +40,27 @@
 
  :: Spring Boot ::                (v3.5.5)
 
-2026-09-08T02:54:36.903-04:00  INFO 25968 --- [url-shortener] [           main] c.u.AnalyticsFlowIntegrationTest         : Starting AnalyticsFlowIntegrationTest using Java 21.0.12.1 with PID 25968 (started by srikarreddygundam in /Users/srikarreddygundam/Projects/url-shortener)
-2026-09-08T02:54:36.904-04:00  INFO 25968 --- [url-shortener] [           main] c.u.AnalyticsFlowIntegrationTest         : No active profile set, falling back to 1 default profile: "default"
-2026-09-08T02:54:37.448-04:00  INFO 25968 --- [url-shortener] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-09-08T02:54:37.480-04:00  INFO 25968 --- [url-shortener] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 26 ms. Found 2 JPA repository interfaces.
-2026-09-08T02:54:37.804-04:00  INFO 25968 --- [url-shortener] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-09-08T02:54:38.055-04:00  INFO 25968 --- [url-shortener] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:urlshortener user=SA
-2026-09-08T02:54:38.057-04:00  INFO 25968 --- [url-shortener] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-09-08T02:54:38.101-04:00  INFO 25968 --- [url-shortener] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:h2:mem:urlshortener (H2 2.3)
-2026-09-08T02:54:38.120-04:00  INFO 25968 --- [url-shortener] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
-2026-09-08T02:54:38.122-04:00  INFO 25968 --- [url-shortener] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 3 migrations (execution time 00:00.010s)
-2026-09-08T02:54:38.128-04:00  INFO 25968 --- [url-shortener] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
-2026-09-08T02:54:38.151-04:00  INFO 25968 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
-2026-09-08T02:54:38.153-04:00  INFO 25968 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - create links"
-2026-09-08T02:54:38.163-04:00  INFO 25968 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - create click events"
-2026-09-08T02:54:38.166-04:00  INFO 25968 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - add link expiration"
-2026-09-08T02:54:38.177-04:00  INFO 25968 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 3 migrations to schema "public", now at version v3 (execution time 00:00.011s)
-2026-09-08T02:54:38.238-04:00  INFO 25968 --- [url-shortener] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-09-08T02:54:38.285-04:00  INFO 25968 --- [url-shortener] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.26.Final
-2026-09-08T02:54:38.311-04:00  INFO 25968 --- [url-shortener] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-09-08T02:54:38.591-04:00  INFO 25968 --- [url-shortener] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-09-08T02:54:38.687-04:00  INFO 25968 --- [url-shortener] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2026-09-08T02:59:27.751-04:00  INFO 26879 --- [url-shortener] [           main] c.u.AnalyticsFlowIntegrationTest         : Starting AnalyticsFlowIntegrationTest using Java 21.0.12.1 with PID 26879 (started by srikarreddygundam in /Users/srikarreddygundam/Projects/url-shortener)
+2026-09-08T02:59:27.752-04:00  INFO 26879 --- [url-shortener] [           main] c.u.AnalyticsFlowIntegrationTest         : No active profile set, falling back to 1 default profile: "default"
+2026-09-08T02:59:28.311-04:00  INFO 26879 --- [url-shortener] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-08T02:59:28.340-04:00  INFO 26879 --- [url-shortener] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24 ms. Found 2 JPA repository interfaces.
+2026-09-08T02:59:28.668-04:00  INFO 26879 --- [url-shortener] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-09-08T02:59:28.849-04:00  INFO 26879 --- [url-shortener] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:urlshortener user=SA
+2026-09-08T02:59:28.850-04:00  INFO 26879 --- [url-shortener] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-09-08T02:59:28.890-04:00  INFO 26879 --- [url-shortener] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:h2:mem:urlshortener (H2 2.3)
+2026-09-08T02:59:28.909-04:00  INFO 26879 --- [url-shortener] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-08T02:59:28.911-04:00  INFO 26879 --- [url-shortener] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 3 migrations (execution time 00:00.009s)
+2026-09-08T02:59:28.916-04:00  INFO 26879 --- [url-shortener] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-08T02:59:28.942-04:00  INFO 26879 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-09-08T02:59:28.945-04:00  INFO 26879 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - create links"
+2026-09-08T02:59:28.953-04:00  INFO 26879 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - create click events"
+2026-09-08T02:59:28.957-04:00  INFO 26879 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - add link expiration"
+2026-09-08T02:59:28.964-04:00  INFO 26879 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 3 migrations to schema "public", now at version v3 (execution time 00:00.007s)
+2026-09-08T02:59:29.021-04:00  INFO 26879 --- [url-shortener] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-09-08T02:59:29.064-04:00  INFO 26879 --- [url-shortener] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.26.Final
+2026-09-08T02:59:29.094-04:00  INFO 26879 --- [url-shortener] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-09-08T02:59:29.300-04:00  INFO 26879 --- [url-shortener] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-08T02:59:29.369-04:00  INFO 26879 --- [url-shortener] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 2.3.232
@@ -69,21 +68,21 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-09-08T02:54:39.255-04:00  INFO 25968 --- [url-shortener] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-09-08T02:54:39.269-04:00  INFO 25968 --- [url-shortener] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-09-08T02:54:39.870-04:00  INFO 25968 --- [url-shortener] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-09-08T02:54:39.870-04:00  INFO 25968 --- [url-shortener] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-09-08T02:54:39.874-04:00  INFO 25968 --- [url-shortener] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
-2026-09-08T02:54:39.882-04:00  INFO 25968 --- [url-shortener] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 12 ms
-2026-09-08T02:54:39.924-04:00  INFO 25968 --- [url-shortener] [           main] c.u.AnalyticsFlowIntegrationTest         : Started AnalyticsFlowIntegrationTest in 3.239 seconds (process running for 4.03)
-[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.306 s -- in com.urlshortener.AnalyticsFlowIntegrationTest
+2026-09-08T02:59:29.932-04:00  INFO 26879 --- [url-shortener] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-08T02:59:29.944-04:00  INFO 26879 --- [url-shortener] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-08T02:59:30.495-04:00  INFO 26879 --- [url-shortener] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-09-08T02:59:30.496-04:00  INFO 26879 --- [url-shortener] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-08T02:59:30.499-04:00  INFO 26879 --- [url-shortener] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-09-08T02:59:30.508-04:00  INFO 26879 --- [url-shortener] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 11 ms
+2026-09-08T02:59:30.546-04:00  INFO 26879 --- [url-shortener] [           main] c.u.AnalyticsFlowIntegrationTest         : Started AnalyticsFlowIntegrationTest in 3.015 seconds (process running for 3.829)
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.983 s -- in com.urlshortener.AnalyticsFlowIntegrationTest
 [INFO] Running com.urlshortener.UrlShortenerFlowIntegrationTest
-2026-09-08T02:54:40.689-04:00  INFO 25968 --- [url-shortener] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.urlshortener.UrlShortenerFlowIntegrationTest]: UrlShortenerFlowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-09-08T02:54:40.692-04:00  INFO 25968 --- [url-shortener] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.UrlShortenerFlowIntegrationTest
-[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.076 s -- in com.urlshortener.UrlShortenerFlowIntegrationTest
+2026-09-08T02:59:31.250-04:00  INFO 26879 --- [url-shortener] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.urlshortener.UrlShortenerFlowIntegrationTest]: UrlShortenerFlowIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-08T02:59:31.252-04:00  INFO 26879 --- [url-shortener] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.UrlShortenerFlowIntegrationTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.062 s -- in com.urlshortener.UrlShortenerFlowIntegrationTest
 [INFO] Running com.urlshortener.api.ErrorContractApiTest
-2026-09-08T02:54:40.770-04:00  INFO 25968 --- [url-shortener] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.urlshortener.api.ErrorContractApiTest]: ErrorContractApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-09-08T02:54:40.779-04:00  INFO 25968 --- [url-shortener] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.api.ErrorContractApiTest
+2026-09-08T02:59:31.320-04:00  INFO 26879 --- [url-shortener] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.urlshortener.api.ErrorContractApiTest]: ErrorContractApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-08T02:59:31.328-04:00  INFO 26879 --- [url-shortener] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.api.ErrorContractApiTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -94,13 +93,13 @@
 
  :: Spring Boot ::                (v3.5.5)
 
-2026-09-08T02:54:40.793-04:00  INFO 25968 --- [url-shortener] [           main] c.urlshortener.api.ErrorContractApiTest  : Starting ErrorContractApiTest using Java 21.0.12.1 with PID 25968 (started by srikarreddygundam in /Users/srikarreddygundam/Projects/url-shortener)
-2026-09-08T02:54:40.793-04:00  INFO 25968 --- [url-shortener] [           main] c.urlshortener.api.ErrorContractApiTest  : No active profile set, falling back to 1 default profile: "default"
-2026-09-08T02:54:41.077-04:00  INFO 25968 --- [url-shortener] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-09-08T02:54:41.078-04:00  INFO 25968 --- [url-shortener] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-09-08T02:54:41.078-04:00  INFO 25968 --- [url-shortener] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2026-09-08T02:54:41.086-04:00  INFO 25968 --- [url-shortener] [           main] c.urlshortener.api.ErrorContractApiTest  : Started ErrorContractApiTest in 0.305 seconds (process running for 5.192)
-2026-09-08T02:54:41.139-04:00 ERROR 25968 --- [url-shortener] [           main] c.urlshortener.api.ApiExceptionHandler   : Unhandled error while processing request
+2026-09-08T02:59:31.348-04:00  INFO 26879 --- [url-shortener] [           main] c.urlshortener.api.ErrorContractApiTest  : Starting ErrorContractApiTest using Java 21.0.12.1 with PID 26879 (started by srikarreddygundam in /Users/srikarreddygundam/Projects/url-shortener)
+2026-09-08T02:59:31.348-04:00  INFO 26879 --- [url-shortener] [           main] c.urlshortener.api.ErrorContractApiTest  : No active profile set, falling back to 1 default profile: "default"
+2026-09-08T02:59:31.614-04:00  INFO 26879 --- [url-shortener] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-09-08T02:59:31.614-04:00  INFO 26879 --- [url-shortener] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-08T02:59:31.615-04:00  INFO 26879 --- [url-shortener] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-09-08T02:59:31.625-04:00  INFO 26879 --- [url-shortener] [           main] c.urlshortener.api.ErrorContractApiTest  : Started ErrorContractApiTest in 0.295 seconds (process running for 4.907)
+2026-09-08T02:59:31.670-04:00 ERROR 26879 --- [url-shortener] [           main] c.urlshortener.api.ApiExceptionHandler   : Unhandled error while processing request
 
 java.lang.IllegalStateException: connection to db-prod-1 refused
 	at com.urlshortener.service.LinkService.create(LinkService.java:52) ~[classes/:na]
@@ -212,15 +211,15 @@ java.lang.IllegalStateException: connection to db-prod-1 refused
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.5.3.jar:3.5.3]
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.5.3.jar:3.5.3]
 
-2026-09-08T02:54:41.174-04:00  WARN 25968 --- [url-shortener] [           main] o.s.web.servlet.PageNotFound             : Request method 'DELETE' is not supported
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.410 s -- in com.urlshortener.api.ErrorContractApiTest
+2026-09-08T02:59:31.703-04:00  WARN 26879 --- [url-shortener] [           main] o.s.web.servlet.PageNotFound             : Request method 'DELETE' is not supported
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.387 s -- in com.urlshortener.api.ErrorContractApiTest
 [INFO] Running com.urlshortener.api.LinkApiTest
-2026-09-08T02:54:41.184-04:00  INFO 25968 --- [url-shortener] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.urlshortener.api.LinkApiTest]: LinkApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-09-08T02:54:41.187-04:00  INFO 25968 --- [url-shortener] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.api.LinkApiTest
-[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.091 s -- in com.urlshortener.api.LinkApiTest
+2026-09-08T02:59:31.712-04:00  INFO 26879 --- [url-shortener] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.urlshortener.api.LinkApiTest]: LinkApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-08T02:59:31.718-04:00  INFO 26879 --- [url-shortener] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.api.LinkApiTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.087 s -- in com.urlshortener.api.LinkApiTest
 [INFO] Running com.urlshortener.api.RedirectApiTest
-2026-09-08T02:54:41.278-04:00  INFO 25968 --- [url-shortener] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.urlshortener.api.RedirectApiTest]: RedirectApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-09-08T02:54:41.285-04:00  INFO 25968 --- [url-shortener] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.api.RedirectApiTest
+2026-09-08T02:59:31.799-04:00  INFO 26879 --- [url-shortener] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.urlshortener.api.RedirectApiTest]: RedirectApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-08T02:59:31.807-04:00  INFO 26879 --- [url-shortener] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.api.RedirectApiTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -231,17 +230,17 @@ java.lang.IllegalStateException: connection to db-prod-1 refused
 
  :: Spring Boot ::                (v3.5.5)
 
-2026-09-08T02:54:41.309-04:00  INFO 25968 --- [url-shortener] [           main] com.urlshortener.api.RedirectApiTest     : Starting RedirectApiTest using Java 21.0.12.1 with PID 25968 (started by srikarreddygundam in /Users/srikarreddygundam/Projects/url-shortener)
-2026-09-08T02:54:41.309-04:00  INFO 25968 --- [url-shortener] [           main] com.urlshortener.api.RedirectApiTest     : No active profile set, falling back to 1 default profile: "default"
-2026-09-08T02:54:41.451-04:00  INFO 25968 --- [url-shortener] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-09-08T02:54:41.451-04:00  INFO 25968 --- [url-shortener] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-09-08T02:54:41.451-04:00  INFO 25968 --- [url-shortener] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2026-09-08T02:54:41.456-04:00  INFO 25968 --- [url-shortener] [           main] com.urlshortener.api.RedirectApiTest     : Started RedirectApiTest in 0.169 seconds (process running for 5.562)
-[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.213 s -- in com.urlshortener.api.RedirectApiTest
+2026-09-08T02:59:31.829-04:00  INFO 26879 --- [url-shortener] [           main] com.urlshortener.api.RedirectApiTest     : Starting RedirectApiTest using Java 21.0.12.1 with PID 26879 (started by srikarreddygundam in /Users/srikarreddygundam/Projects/url-shortener)
+2026-09-08T02:59:31.830-04:00  INFO 26879 --- [url-shortener] [           main] com.urlshortener.api.RedirectApiTest     : No active profile set, falling back to 1 default profile: "default"
+2026-09-08T02:59:31.969-04:00  INFO 26879 --- [url-shortener] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-09-08T02:59:31.969-04:00  INFO 26879 --- [url-shortener] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-08T02:59:31.970-04:00  INFO 26879 --- [url-shortener] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-09-08T02:59:31.975-04:00  INFO 26879 --- [url-shortener] [           main] com.urlshortener.api.RedirectApiTest     : Started RedirectApiTest in 0.166 seconds (process running for 5.258)
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.204 s -- in com.urlshortener.api.RedirectApiTest
 [INFO] Running com.urlshortener.service.ClickAnalyticsServiceTest
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.225 s -- in com.urlshortener.service.ClickAnalyticsServiceTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.128 s -- in com.urlshortener.service.ClickAnalyticsServiceTest
 [INFO] Running com.urlshortener.service.LinkServiceTest
-2026-09-08T02:54:41.838-04:00 ERROR 25968 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Failed to publish click event for code Ab3xY9z
+2026-09-08T02:59:32.254-04:00 ERROR 26879 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Failed to publish click event for code Ab3xY9z
 
 java.lang.IllegalStateException: event infrastructure down
 	at com.urlshortener.service.LinkService.resolveForRedirect(LinkService.java:89) ~[classes/:na]
@@ -321,15 +320,15 @@ java.lang.IllegalStateException: event infrastructure down
 	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.5.3.jar:3.5.3]
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.5.3.jar:3.5.3]
 
-2026-09-08T02:54:41.843-04:00  WARN 25968 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Short code collision, attempt 1/5
-2026-09-08T02:54:41.846-04:00  WARN 25968 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Short code collision, attempt 1/5
-2026-09-08T02:54:41.846-04:00  WARN 25968 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Short code collision, attempt 2/5
-2026-09-08T02:54:41.846-04:00  WARN 25968 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Short code collision, attempt 3/5
-2026-09-08T02:54:41.846-04:00  WARN 25968 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Short code collision, attempt 4/5
-2026-09-08T02:54:41.846-04:00  WARN 25968 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Short code collision, attempt 5/5
-[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.125 s -- in com.urlshortener.service.LinkServiceTest
+2026-09-08T02:59:32.259-04:00  WARN 26879 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Short code collision, attempt 1/5
+2026-09-08T02:59:32.261-04:00  WARN 26879 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Short code collision, attempt 1/5
+2026-09-08T02:59:32.262-04:00  WARN 26879 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Short code collision, attempt 2/5
+2026-09-08T02:59:32.262-04:00  WARN 26879 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Short code collision, attempt 3/5
+2026-09-08T02:59:32.263-04:00  WARN 26879 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Short code collision, attempt 4/5
+2026-09-08T02:59:32.263-04:00  WARN 26879 --- [url-shortener] [           main] com.urlshortener.service.LinkService     : Short code collision, attempt 5/5
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.130 s -- in com.urlshortener.service.LinkServiceTest
 [INFO] Running com.urlshortener.service.ClickEventRecorderTest
-2026-09-08T02:54:41.853-04:00 ERROR 25968 --- [url-shortener] [           main] c.u.service.ClickEventRecorder           : Failed to record click for link id 42
+2026-09-08T02:59:32.269-04:00 ERROR 26879 --- [url-shortener] [           main] c.u.service.ClickEventRecorder           : Failed to record click for link id 42
 
 java.lang.RuntimeException: analytics database down
 	at com.urlshortener.service.ClickEventRecorder.onLinkClicked(ClickEventRecorder.java:32) ~[classes/:na]
@@ -416,12 +415,12 @@ java.lang.RuntimeException: analytics database down
 
 [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.urlshortener.service.ClickEventRecorderTest
 [INFO] Running com.urlshortener.service.UrlValidatorTest
-[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.031 s -- in com.urlshortener.service.UrlValidatorTest
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.033 s -- in com.urlshortener.service.UrlValidatorTest
 [INFO] Running com.urlshortener.service.RandomBase62CodeGeneratorTest
-[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.045 s -- in com.urlshortener.service.RandomBase62CodeGeneratorTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.048 s -- in com.urlshortener.service.RandomBase62CodeGeneratorTest
 [INFO] Running com.urlshortener.UrlShortenerApplicationTests
-2026-09-08T02:54:41.943-04:00  INFO 25968 --- [url-shortener] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.urlshortener.UrlShortenerApplicationTests]: UrlShortenerApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-09-08T02:54:41.944-04:00  INFO 25968 --- [url-shortener] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.UrlShortenerApplicationTests
+2026-09-08T02:59:32.356-04:00  INFO 26879 --- [url-shortener] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.urlshortener.UrlShortenerApplicationTests]: UrlShortenerApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-08T02:59:32.357-04:00  INFO 26879 --- [url-shortener] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.UrlShortenerApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -432,21 +431,21 @@ java.lang.RuntimeException: analytics database down
 
  :: Spring Boot ::                (v3.5.5)
 
-2026-09-08T02:54:41.961-04:00  INFO 25968 --- [url-shortener] [           main] c.u.UrlShortenerApplicationTests         : Starting UrlShortenerApplicationTests using Java 21.0.12.1 with PID 25968 (started by srikarreddygundam in /Users/srikarreddygundam/Projects/url-shortener)
-2026-09-08T02:54:41.962-04:00  INFO 25968 --- [url-shortener] [           main] c.u.UrlShortenerApplicationTests         : No active profile set, falling back to 1 default profile: "default"
-2026-09-08T02:54:42.136-04:00  INFO 25968 --- [url-shortener] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-09-08T02:54:42.143-04:00  INFO 25968 --- [url-shortener] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 2 JPA repository interfaces.
-2026-09-08T02:54:42.225-04:00  INFO 25968 --- [url-shortener] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2026-09-08T02:54:42.255-04:00  INFO 25968 --- [url-shortener] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:urlshortener user=SA
-2026-09-08T02:54:42.255-04:00  INFO 25968 --- [url-shortener] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-2026-09-08T02:54:42.257-04:00  INFO 25968 --- [url-shortener] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:h2:mem:urlshortener (H2 2.3)
-2026-09-08T02:54:42.268-04:00  INFO 25968 --- [url-shortener] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 3 migrations (execution time 00:00.007s)
-2026-09-08T02:54:42.271-04:00  INFO 25968 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 3
-2026-09-08T02:54:42.271-04:00  INFO 25968 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
-2026-09-08T02:54:42.285-04:00  INFO 25968 --- [url-shortener] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-09-08T02:54:42.288-04:00  INFO 25968 --- [url-shortener] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-09-08T02:54:42.294-04:00  INFO 25968 --- [url-shortener] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-09-08T02:54:42.295-04:00  INFO 25968 --- [url-shortener] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2026-09-08T02:59:32.374-04:00  INFO 26879 --- [url-shortener] [           main] c.u.UrlShortenerApplicationTests         : Starting UrlShortenerApplicationTests using Java 21.0.12.1 with PID 26879 (started by srikarreddygundam in /Users/srikarreddygundam/Projects/url-shortener)
+2026-09-08T02:59:32.374-04:00  INFO 26879 --- [url-shortener] [           main] c.u.UrlShortenerApplicationTests         : No active profile set, falling back to 1 default profile: "default"
+2026-09-08T02:59:32.546-04:00  INFO 26879 --- [url-shortener] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-08T02:59:32.553-04:00  INFO 26879 --- [url-shortener] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 2 JPA repository interfaces.
+2026-09-08T02:59:32.639-04:00  INFO 26879 --- [url-shortener] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-09-08T02:59:32.640-04:00  INFO 26879 --- [url-shortener] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:urlshortener user=SA
+2026-09-08T02:59:32.640-04:00  INFO 26879 --- [url-shortener] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-09-08T02:59:32.641-04:00  INFO 26879 --- [url-shortener] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:h2:mem:urlshortener (H2 2.3)
+2026-09-08T02:59:32.645-04:00  INFO 26879 --- [url-shortener] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 3 migrations (execution time 00:00.002s)
+2026-09-08T02:59:32.647-04:00  INFO 26879 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 3
+2026-09-08T02:59:32.647-04:00  INFO 26879 --- [url-shortener] [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+2026-09-08T02:59:32.663-04:00  INFO 26879 --- [url-shortener] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-09-08T02:59:32.665-04:00  INFO 26879 --- [url-shortener] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-09-08T02:59:32.671-04:00  INFO 26879 --- [url-shortener] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-08T02:59:32.672-04:00  INFO 26879 --- [url-shortener] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
 	Database driver: undefined/unknown
 	Database version: 2.3.232
@@ -454,16 +453,16 @@ java.lang.RuntimeException: analytics database down
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-09-08T02:54:42.315-04:00  INFO 25968 --- [url-shortener] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-09-08T02:54:42.316-04:00  INFO 25968 --- [url-shortener] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-09-08T02:54:42.514-04:00  INFO 25968 --- [url-shortener] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
-2026-09-08T02:54:42.534-04:00  INFO 25968 --- [url-shortener] [           main] c.u.UrlShortenerApplicationTests         : Started UrlShortenerApplicationTests in 0.589 seconds (process running for 6.64)
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.598 s -- in com.urlshortener.UrlShortenerApplicationTests
+2026-09-08T02:59:32.693-04:00  INFO 26879 --- [url-shortener] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-08T02:59:32.694-04:00  INFO 26879 --- [url-shortener] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-08T02:59:32.929-04:00  INFO 26879 --- [url-shortener] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-09-08T02:59:32.978-04:00  INFO 26879 --- [url-shortener] [           main] c.u.UrlShortenerApplicationTests         : Started UrlShortenerApplicationTests in 0.619 seconds (process running for 6.261)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.630 s -- in com.urlshortener.UrlShortenerApplicationTests
 [INFO] Running com.urlshortener.domain.LinkTest
-[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.urlshortener.domain.LinkTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.urlshortener.domain.LinkTest
 [INFO] Running com.urlshortener.LinkExpirationIntegrationTest
-2026-09-08T02:54:42.550-04:00  INFO 25968 --- [url-shortener] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.urlshortener.LinkExpirationIntegrationTest]: LinkExpirationIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-09-08T02:54:42.551-04:00  INFO 25968 --- [url-shortener] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.LinkExpirationIntegrationTest
+2026-09-08T02:59:32.991-04:00  INFO 26879 --- [url-shortener] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.urlshortener.LinkExpirationIntegrationTest]: LinkExpirationIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-08T02:59:32.992-04:00  INFO 26879 --- [url-shortener] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.urlshortener.UrlShortenerApplication for test class com.urlshortener.LinkExpirationIntegrationTest
 [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.036 s -- in com.urlshortener.LinkExpirationIntegrationTest
 [INFO] 
 [INFO] Results:
@@ -472,7 +471,6 @@ java.lang.RuntimeException: analytics database down
 [INFO] 
 [INFO] 
 [INFO] --- jar:3.4.2:jar (default-jar) @ url-shortener ---
-[INFO] Building jar: /Users/srikarreddygundam/Projects/url-shortener/target/url-shortener-0.1.0-SNAPSHOT.jar
 [INFO] 
 [INFO] --- spring-boot:3.5.5:repackage (repackage) @ url-shortener ---
 [INFO] Replacing main artifact /Users/srikarreddygundam/Projects/url-shortener/target/url-shortener-0.1.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
@@ -489,6 +487,6 @@ Audit done.
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  9.463 s
-[INFO] Finished at: 2026-09-08T02:54:43-04:00
+[INFO] Total time:  7.976 s
+[INFO] Finished at: 2026-09-08T02:59:34-04:00
 [INFO] ------------------------------------------------------------------------
