@@ -1,15 +1,14 @@
 # URL Shortener
 
-A URL shortener service built as an AI-assisted engineering exercise: core
-shortening/redirect APIs, click analytics, and link expiration, developed
-through three documented scenarios (greenfield, ambiguous requirement,
-brownfield change request) with a full AI-usage traceability log.
+A URL shortener service built as a software engineering exercise, covering core shortening and redirect APIs, click analytics, link expiration, validation, testing, and reliability considerations.
 
-- Architecture and design decisions: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
-- API contract: [`docs/openapi.yaml`](docs/openapi.yaml)
-- Scenario walkthroughs: [`docs/scenarios/`](docs/scenarios/)
-- AI traceability log (generated / edited / rejected): [`docs/AI_USAGE.md`](docs/AI_USAGE.md)
-- Final summary, trade-offs, limitations: [`docs/ENGINEERING_SUMMARY.md`](docs/ENGINEERING_SUMMARY.md)
+The implementation is developed through three scenarios: greenfield development, an ambiguous analytics requirement, and a brownfield expiration change.
+
+- Architecture and design decisions: `[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)`
+- API contract: `[docs/openapi.yaml](docs/openapi.yaml)`
+- Scenario walkthroughs: `[docs/scenarios/](docs/scenarios/)`
+- Engineering decision and AI usage notes: `docs/AI_USAGE.md`
+- Final summary, trade-offs, limitations: `[docs/ENGINEERING_SUMMARY.md](docs/ENGINEERING_SUMMARY.md)`
 
 ## Prerequisites
 
@@ -64,11 +63,11 @@ Health: `GET /actuator/health`.
 
 ## Configuration
 
-| Property | Default | Meaning |
-|---|---|---|
-| `app.base-url` | `http://localhost:8080` | Base used to build returned short URLs |
-| `app.code-length` | `7` | Short-code length (base62) |
-| `app.max-url-length` | `2048` | Max accepted long-URL length |
+| Property             | Default                 | Meaning                                |
+| -------------------- | ----------------------- | -------------------------------------- |
+| `app.base-url`       | `http://localhost:8080` | Base used to build returned short URLs |
+| `app.code-length`    | `7`                     | Short-code length (base62)             |
+| `app.max-url-length` | `2048`                  | Max accepted long-URL length           |
 
 ## Quality gates
 
